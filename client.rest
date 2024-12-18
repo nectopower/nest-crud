@@ -1,0 +1,41 @@
+
+@baseUrl = http://localhost:3000
+
+### Lista todos os usuários
+GET	{{baseUrl}}/users	
+
+### Busca um usuário pelo ID/:id
+GET	{{baseUrl}}/users/6/	
+
+### Cria um novo usuário
+POST {{baseUrl}}/users	
+Content-Type: application/json
+
+{
+  "user": "Arllan Ribeiro",
+  "pass": "AABBCC24",
+  "email": "arllan@example.com",
+  "member": "admin",
+  "status": "ativo"
+}
+
+### Atualiza os dados de um usuário
+PUT	{{baseUrl}}/users/1/	
+Content-Type: application/json
+
+{
+  "user": "Francisco Pedro",
+  "pass": "112233",
+  "email": "nectopower@gmail.com",
+  "member": "supervisor",
+  "status": "ativo"
+}
+
+###Remove um usuário
+DELETE	{{baseUrl}}/users/:id	
+
+### Filtra usuários pelo status
+GET	{{baseUrl}}/users/status/:status	
+
+### Filtra usuários pela função
+GET	{{baseUrl}}/users/role/:role
