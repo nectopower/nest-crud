@@ -8,18 +8,26 @@ import {
   Body,
   ParseIntPipe,
   NotFoundException,
+  BadRequestException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { User, UserStatus, MemberRole } from './user.entity';
-import { ParseEnumPipe } from '@nestjs/common'; // Pipe para validar enums
+import { ParseEnumPipe } from '@nestjs/common';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  findAll(): Promise<User[]> {
-    return this.usersService.findAll();
+  async findAll(): Promise<User[]> {
+    const users = await this.usersService.findAll();
+
+    // Verifica se há usuários na lista
+    if (users.length === 0) {
+      throw new NotFoundException('Nenhum usuário encontrado.');
+    }
+
+    return users;
   }
 
   @Get(':id')
@@ -35,29 +43,73 @@ export class UsersController {
   }
 
   @Post()
-  create(@Body() user: Partial<User>): Promise<User> {
+  async create(@Body() user: Partial<User>): Promise<User> {
+    // Validação básica: todos os campos obrigatórios devem estar presentes
+    if (!user.user || !user.pass || !user.email) {
+      throw new BadRequestException(
+        'Os campos user, pass e email são obrigatórios.',
+      );
+    }
+
     return this.usersService.create(user);
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() user: Partial<User>): Promise<User> {
+  async update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() user: Partial<User>,
+  ): Promise<User> {
+    const existingUser = await this.usersService.findOne(id);
+
+    // Verifica se o usuário existe antes de atualizar
+    if (!existingUser) {
+      throw new NotFoundException(`Usuário com ID ${id} não foi encontrado.`);
+    }
+
     return this.usersService.update(id, user);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number): Promise<void> {
+  async remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    const user = await this.usersService.findOne(id);
+
+    // Verifica se o usuário existe antes de tentar removê-lo
+    if (!user) {
+      throw new NotFoundException(`Usuário com ID ${id} não foi encontrado.`);
+    }
+
     return this.usersService.remove(id);
   }
 
   @Get('status/:status')
-  findByStatus(
+  async findByStatus(
     @Param('status', new ParseEnumPipe(UserStatus)) status: UserStatus,
-  ) {
-    return this.usersService.findByStatus(status);
+  ): Promise<User[]> {
+    const users = await this.usersService.findByStatus(status);
+
+    // Verifica se há usuários com o status fornecido
+    if (users.length === 0) {
+      throw new NotFoundException(
+        `Nenhum usuário com status ${status} foi encontrado.`,
+      );
+    }
+
+    return users;
   }
 
   @Get('role/:role')
-  findByRole(@Param('role', new ParseEnumPipe(MemberRole)) role: MemberRole) {
-    return this.usersService.findByRole(role);
+  async findByRole(
+    @Param('role', new ParseEnumPipe(MemberRole)) role: MemberRole,
+  ): Promise<User[]> {
+    const users = await this.usersService.findByRole(role);
+
+    // Verifica se há usuários com a função fornecida
+    if (users.length === 0) {
+      throw new NotFoundException(
+        `Nenhum usuário com função ${role} foi encontrado.`,
+      );
+    }
+
+    return users;
   }
 }

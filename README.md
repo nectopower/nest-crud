@@ -45,17 +45,26 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
-## Run tests
+## Pluings sugeridos
+
+Testando com o REST Client
+Este projeto suporta o uso do REST Client, uma extensão do Visual Studio Code que permite testar requisições HTTP diretamente no editor.
+
+Instalando o REST Client
+No Visual Studio Code, acesse a aba Extensions.
+Pesquise por REST Client e instale a extensão oficial.
+Usando o REST Client
+Crie um arquivo com extensão .http ou .rest no projeto (ex.: test-api.http)
+
+## Run exemple
 
 ```bash
-# unit tests
-$ yarn run test
+#Listar todos os users
+GET {{baseUrl}}/users
 
-# e2e tests
-$ yarn run test:e2e
+#Lisar user spelo ID
+GET {{baseUrl}}/users/6
 
-# test coverage
-$ yarn run test:cov
 ```
 
 ## Deployment
