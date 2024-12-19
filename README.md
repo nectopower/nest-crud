@@ -45,7 +45,7 @@ $ yarn run start:dev
 $ yarn run start:prod
 ```
 
-## Pluings sugeridos
+## Pluing sugerido
 
 Testando com o REST Client
 Este projeto suporta o uso do REST Client, uma extensão do Visual Studio Code que permite testar requisições HTTP diretamente no editor.

@@ -1,5 +1,5 @@
 
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:3000/api/v1
 
 ### Lista todos os usuários
 GET	{{baseUrl}}/users	
@@ -12,10 +12,10 @@ POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-  "user": "Arllan Ribeiro",
-  "pass": "AABBCC24",
-  "email": "arllan@example.com",
-  "member": "admin",
+  "user": "Valquiria Lima",
+  "pass": "221601",
+  "email": "valima@gmail.com",
+  "member": "user",
   "status": "ativo"
 }
 
