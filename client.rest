@@ -12,10 +12,10 @@ POST {{baseUrl}}/users
 Content-Type: application/json
 
 {
-  "user": "Valquiria Lima",
+  "user": "Arllan Santana",
   "pass": "221601",
-  "email": "valima@gmail.com",
-  "member": "user",
+  "email": "arllan@gmail.com",
+  "member": "avançado",
   "status": "ativo"
 }
 
@@ -26,16 +26,16 @@ Content-Type: application/json
 {
   "user": "Francisco Pedro",
   "pass": "112233",
-  "email": "nectopower@gmail.com",
+  "email": "francisco@gmail.com",
   "member": "supervisor",
   "status": "ativo"
 }
 
 ###Remove um usuário
-DELETE	{{baseUrl}}/users/:id	
+DELETE	{{baseUrl}}/users/19	
 
 ### Filtra usuários pelo status
-GET	{{baseUrl}}/users/status/:status	
+GET	{{baseUrl}}/users/status/ativo	
 
 ### Filtra usuários pela função
-GET	{{baseUrl}}/users/role/:role
+GET	{{baseUrl}}/users/role/user
