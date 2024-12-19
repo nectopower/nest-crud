@@ -12,7 +12,7 @@ dotenv.config();
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST, // Usa as variáveis do .env
-      port: parseInt(process.env.DATABASE_PORT, 10), // Converte para número
+      port: parseInt(process.env.DATABASE_PORT, 10), 
       username: process.env.DATABASE_USERNAME,
       password: process.env.DATABASE_PASSWORD || '', // Senha vazia
       database: process.env.DATABASE_NAME,
